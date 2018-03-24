@@ -10,6 +10,8 @@ package com.github.bryanww.samplebot;
     import com.github.ocraft.s2client.protocol.spatial.PointI;
     import com.github.ocraft.s2client.protocol.unit.Tag;
 
+    import java.nio.file.Paths;
+
     import static com.github.ocraft.s2client.api.S2Client.starcraft2Client;
     import static com.github.ocraft.s2client.api.controller.S2Controller.starcraft2Game;
     import static com.github.ocraft.s2client.protocol.action.Action.action;
@@ -29,7 +31,7 @@ public class SampleBot {
 
 
     public static void main(String[] args) {
-        S2Controller game = starcraft2Game().launch();
+        S2Controller game = starcraft2Game().withExecutablePath(Paths.get("E:/Program Files (x86)/StarCraft II")).launch();
         S2Client client = starcraft2Client().connectTo(game).traced(true).start();
         client.request(createGame()
             .onBattlenetMap(BattlenetMap.of("Lava Flow"))
@@ -39,13 +41,14 @@ public class SampleBot {
             .subscribe(response -> {
                 response.as(ResponseCreateGame.class).ifPresent(r -> client.request(joinGame().as(TERRAN)));
                 response.as(ResponseJoinGame.class).ifPresent(r -> {
-//                    client.request(actions().of(
-//                            action().raw(unitCommand().forUnits(Tag.of(TERRAN_COMMAND_CENTER.)).useAbility(TRAIN_SCV))
+                    client.request(actions().of(
+//                            action().raw(unitCommand().forUnits(Tag.of(TERRAN_COMMAND_CENTER)).useAbility(TRAIN_SCV))
 //                            action().raw(cameraMove().to(Point.of(10, 10))),
-//                            action().featureLayer(click().on(PointI.of(15, 10)).withMode(TOGGLE)),
-//                            action().ui(selectArmy().add())
-//                    ));
-                    client.request(leaveGame());
+                            action().featureLayer(click().on(PointI.of(15, 10)).withMode(TOGGLE)),
+                            action().ui(selectArmy().add())
+                    ));
+                    client.request(nextStep());
+//                    client.request(leaveGame());
                 });
             });
     }

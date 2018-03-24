@@ -11,6 +11,8 @@
     <properties>
         <maven.compiler.source>1.9</maven.compiler.source>
         <maven.compiler.target>1.9</maven.compiler.target>
+        <version.slf4j>1.7.25</version.slf4j>
+        <version.log4j>2.9.1</version.log4j>
     </properties>
 
     <dependencies>
@@ -18,6 +20,23 @@
             <groupId>com.github.ocraft</groupId>
             <artifactId>ocraft-s2client-api</artifactId>
             <version>0.1.2</version>
+        </dependency>
+
+        <!-- log4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${version.slf4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${version.log4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${version.log4j}</version>
         </dependency>
     </dependencies>
 </project>
