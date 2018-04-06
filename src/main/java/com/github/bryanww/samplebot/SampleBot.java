@@ -1,18 +1,22 @@
 package com.github.bryanww.samplebot;
 
+import SC2APIProtocol.Data;
 import com.github.ocraft.s2client.api.S2Client;
 import com.github.ocraft.s2client.api.controller.S2Controller;
 import com.github.ocraft.s2client.protocol.action.raw.ActionRawUnitCommand;
+import com.github.ocraft.s2client.protocol.data.UnitTypeData;
 import com.github.ocraft.s2client.protocol.data.Units;
 import com.github.ocraft.s2client.protocol.game.BattlenetMap;
 import com.github.ocraft.s2client.protocol.game.Difficulty;
 import com.github.ocraft.s2client.protocol.game.GameStatus;
 import com.github.ocraft.s2client.protocol.game.InterfaceOptions;
+import com.github.ocraft.s2client.protocol.request.RequestData;
 import com.github.ocraft.s2client.protocol.response.ResponseCreateGame;
 import com.github.ocraft.s2client.protocol.response.ResponseJoinGame;
 import com.github.ocraft.s2client.protocol.response.ResponseObservation;
 import com.github.ocraft.s2client.protocol.response.ResponseStep;
 import com.github.ocraft.s2client.protocol.unit.Unit;
+import com.google.protobuf.Descriptors;
 
 import static com.github.ocraft.s2client.api.S2Client.starcraft2Client;
 import static com.github.ocraft.s2client.api.controller.S2Controller.starcraft2Game;
@@ -58,7 +62,7 @@ public class SampleBot {
                                     }
 
                                     if (r.getObservation().getPlayerCommon().getMinerals() - mineralsSpentThisStep >= 50
-                                            && r.getObservation().getPlayerCommon().getFoodUsed() < (r.getObservation().getPlayerCommon().getFoodCap() * 0.8)) {
+                                            && r.getObservation().getPlayerCommon().getFoodUsed() < (r.getObservation().getPlayerCommon().getFoodCap() - 1)) {
                                         client.request(actions().of(
                                                 action().raw(ActionRawUnitCommand.unitCommand().forUnits(u.getTag()).useAbility(TRAIN_DRONE))
                                         ));
